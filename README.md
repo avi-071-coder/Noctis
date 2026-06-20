@@ -1,53 +1,41 @@
-# Noctis: AI Dream Visualizer
+# What if...
 
-Noctis is a high-end, cinematic web application that transforms your textual dream descriptions into stunning visual realities. It acts as an interactive bridge between human subconsciousness and artificial intelligence.
+What if your dreams could be seen? Every dream leaves a trace in your subconscious. 
 
-By simply describing what you experienced in your dream, Noctis generates a comprehensive, poetic log of your subconscious, including deep emotional profiling, symbolic analysis, and a breathtaking AI-generated wide-screen visualization.
+Welcome to **Noctis**, an atmospheric AI dream visualizer. Noctis serves as an interactive bridge between human consciousness and artificial intelligence, transforming your cryptic nighttime visions into stunning, cinematic visual storytelling.
+
+Simply describe what you experienced, and Noctis will generate a comprehensive log of your subconscious, including emotional profiling, symbolic decoding, and a breathtaking AI-generated visualization.
 
 ## Features
 
-- **Cinematic AI Imagery**: Generates a high-quality 21:9 visual representation of your dream using Pollinations.ai.
-- **Deep Subconscious Analysis**: Uses Google Gemini 1.5 Flash to extract emotional intensities and decode the cryptic symbols present in your dream.
-- **Sequential Storyboard**: Reconstructs your dream chronologically, mapping out the events in a timeline format.
-- **Premium Interface**: Built with Tailwind CSS and Framer Motion, featuring glassmorphism, floating ambient glows, and buttery smooth animations.
+- **Cinematic Visuals:** Experience your dreams reconstructed in high-quality 21:9 visual formats using AI image synthesis.
+- **Deep Dream Analysis:** Unravel the symbols and emotional intensities hidden within your dream.
+- **Chronological Storyboards:** See your dream mapped out event-by-event on a narrative timeline.
+- **Atmospheric UX:** Immerse yourself in a premium, glassmorphic UI driven by cinematic micro-animations and ambient designs.
+- **Mobile Responsive:** A flawless and engaging experience across desktop and mobile devices.
 
-## How to Run Locally
+## Tech Stack
 
-### Prerequisites
-- Node.js (v18 or higher)
-- A Google Gemini API Key
+- **Core:** Next.js 14+ (App Router), React, TypeScript
+- **Styling & UI:** Tailwind CSS, Framer Motion (for buttery smooth transitions)
+- **AI Engines:** Google Gemini (Text & Logic), Pollinations AI (Imagery)
 
-### Setup Instructions
+## Setup Instructions
 
-1. **Clone the repository** (if you haven't already).
-2. **Install dependencies**:
+To run Noctis locally:
+
+1. **Install Dependencies**
    ```bash
    npm install
    ```
-3. **Configure Environment Variables**:
-   Create a `.env.local` file in the root directory and add your Gemini API key:
+2. **Environment Variables**
+   Create a `.env.local` file in the root directory:
    ```env
    GEMINI_API_KEY=your_gemini_api_key_here
    ```
-4. **Start the Development Server**:
+3. **Launch the Platform**
    ```bash
    npm run dev
    ```
-5. **Open Noctis**:
-   Open your browser and navigate to `http://localhost:3000`.
-
-## Architecture
-
-- **Framework**: Next.js 14+ (App Router)
-- **Styling**: Tailwind CSS
-- **Animations**: Framer Motion
-- **AI Text Engine**: Google Generative AI (Gemini 1.5 Flash)
-- **AI Image Engine**: Pollinations AI (Proxy routed through Next.js backend to bypass adblockers)
-
-## Troubleshooting
-
-- **Image Generation Failing**: If images aren't loading, ensure you aren't blocking `localhost` requests. The image fetch is securely proxied through the Next.js server to avoid CORS/AdBlocker issues.
-- **Gemini Errors**: Ensure your `GEMINI_API_KEY` is valid and has sufficient quota.
-
 ---
-*Exploring the intersection of consciousness and artificial intelligence.*
+

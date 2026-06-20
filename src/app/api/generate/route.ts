@@ -19,13 +19,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "GEMINI_API_KEY is not configured" }, { status: 500 });
     }
 
-    const model = genAI.getGenerativeModel({
-      model: "gemini-3.5-flash",
-      generationConfig: {
-        responseMimeType: "application/json",
-      }
-    });
-
     const prompt = `You are an expert dream analyst and cinematic director. 
     Analyze the following dream and return a JSON object with this exact structure:
     {
@@ -47,8 +40,62 @@ export async function POST(req: Request) {
 
     Dream: "${dream}"`;
 
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
+    let text = "";
+    let lastError: any = null;
+    const modelsToTry = [
+      "gemini-3.5-flash",
+      "gemini-3.1-flash-lite",
+      "gemini-3.1-pro",
+      "gemini-2.5-flash",
+      "gemini-1.5-flash"
+    ];
+
+    for (const modelName of modelsToTry) {
+      console.log(`Attempting dream generation with model: ${modelName}`);
+      let attempts = 3;
+      let delay = 1000; // 1 second initial delay
+      
+      while (attempts > 0) {
+        try {
+          const model = genAI.getGenerativeModel({
+            model: modelName,
+            generationConfig: {
+              responseMimeType: "application/json",
+            }
+          });
+          const result = await model.generateContent(prompt);
+          text = result.response.text();
+          if (text) {
+            // Validate JSON formatting
+            JSON.parse(text);
+            console.log(`Successfully generated dream using model: ${modelName}`);
+            break;
+          }
+        } catch (err: any) {
+          lastError = err;
+          attempts--;
+          console.warn(`Model ${modelName} failed (Attempts left: ${attempts}). Error:`, err.message || err);
+          if (attempts > 0) {
+            // Exponential backoff with jitter
+            const jitter = Math.random() * 200;
+            await new Promise((resolve) => setTimeout(resolve, delay + jitter));
+            delay *= 2;
+          }
+        }
+      }
+      
+      if (text) {
+        break;
+      }
+    }
+
+    if (!text) {
+      console.error("All models failed. Last error details:", lastError);
+      return NextResponse.json({
+        error: "Subconscious generation is currently experiencing high demand. Please try again in a few moments."
+      }, { status: 503 });
+    }
+
     const parsedData = JSON.parse(text);
 
     // Use Pollinations.ai for free, instant image generation based on the imagePrompt
