@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Noctis | AI Dream Visualizer",
     description: "Transform your cryptic nighttime visions into stunning, cinematic visual storytelling using Artificial Intelligence.",
-    url: "https://noctis.onrender.com",
+    url: "https://noctis-mqk9.onrender.com",
     siteName: "Noctis",
     type: "website",
   },
@@ -23,7 +23,10 @@ export const metadata: Metadata = {
     title: "Noctis | AI Dream Visualizer",
     description: "Visualize the unseen. Transform human dreams into surreal visual worlds.",
   },
-  metadataBase: new URL("https://noctis.onrender.com"),
+  verification: {
+    google: "G_1TdD056H6BtoXj1g5p_18yd4rZo0VYqqpQiow2KqM",
+  },
+  metadataBase: new URL("https://noctis-mqk9.onrender.com"),
 };
 
 export default function RootLayout({
