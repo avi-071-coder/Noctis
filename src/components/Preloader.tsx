@@ -55,7 +55,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           muted
           playsInline
           onEnded={handleVideoEnded}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain sm:object-cover"
         />
       </motion.div>
 
