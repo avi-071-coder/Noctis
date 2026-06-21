@@ -10,6 +10,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Noctis | AI Dream Visualizer",
   description: "Transform human dreams into surreal visual worlds, symbolic interpretations, and emotionally intelligent cinematic experiences.",
+  icons: {
+    icon: '/logo.png',
+  },
   keywords: ["AI dream visualizer", "dream interpretation", "subconscious", "generative AI art", "dream meaning"],
   openGraph: {
     title: "Noctis | AI Dream Visualizer",

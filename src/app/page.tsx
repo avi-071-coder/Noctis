@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Preloader from "@/components/Preloader";
 import Hero from "@/components/Hero";
 import DreamInput from "@/components/DreamInput";
 import DreamAnalysisOverlay from "@/components/DreamAnalysisOverlay";
@@ -11,7 +10,7 @@ import Footer from "@/components/Footer";
 import { type DreamData } from "@/types";
 
 export default function Home() {
-  const [view, setView] = useState<"preloader" | "intro" | "input" | "analyzing" | "result">("preloader");
+  const [view, setView] = useState<"intro" | "input" | "analyzing" | "result">("intro");
   const [isProcessing, setIsProcessing] = useState(false);
   const [dreamData, setDreamData] = useState<DreamData | null>(null);
 
@@ -105,47 +104,42 @@ export default function Home() {
       />
 
       {/* Navigation (Cinematic Layout) */}
-      {view !== "preloader" && (
-        <motion.nav 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.0, delay: 0.5 }}
-          className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl z-50 p-6 md:p-8 flex justify-between items-center pointer-events-auto"
+      {/* Navigation (Cinematic Layout) */}
+      <motion.nav 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.0, delay: 0.5 }}
+        className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl z-50 p-6 md:p-8 flex justify-between items-center pointer-events-auto"
+      >
+        <div 
+          onClick={() => { if (!isProcessing) setView("intro"); }}
+          className="flex items-center cursor-pointer group select-none"
         >
-          <div 
-            onClick={() => { if (!isProcessing) setView("intro"); }}
-            className="flex items-center gap-2.5 cursor-pointer group select-none"
-          >
-            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-gradient-to-tr from-violet-glow to-moonlight-blue shadow-[0_0_15px_rgba(139,92,246,0.6)] group-hover:scale-105 transition-transform" />
-            <span className="font-semibold tracking-[0.25em] uppercase text-[10px] sm:text-xs text-white/95">Noctis</span>
-          </div>
+          <img src="/logo.png" alt="Noctis Logo" className="w-8 h-8 sm:w-10 sm:h-10 object-contain group-hover:scale-110 transition-transform drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]" />
+        </div>
 
-          <div className="flex items-center gap-4 sm:gap-6">
-            {view === "intro" && (
-              <button
-                onClick={() => setView("input")}
-                className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-white/20 bg-white text-black hover:bg-transparent hover:text-white hover:border-white/40 text-[9px] sm:text-[10px] tracking-widest uppercase font-semibold transition-all duration-300 cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transform hover:scale-[1.03] active:scale-[0.98]"
-              >
-                Get Started
-              </button>
-            )}
-            {view === "result" && (
-              <button
-                onClick={() => setView("input")}
-                className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-white/10 hover:border-white/20 hover:bg-white/5 text-[9px] sm:text-[10px] tracking-widest uppercase font-semibold text-white/80 hover:text-white transition-all cursor-pointer shadow-lg active:scale-[0.98]"
-              >
-                Inscribe New Dream
-              </button>
-            )}
-          </div>
-        </motion.nav>
-      )}
+        <div className="flex items-center gap-4 sm:gap-6">
+          {view === "intro" && (
+            <button
+              onClick={() => setView("input")}
+              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-white/20 bg-white text-black hover:bg-transparent hover:text-white hover:border-white/40 text-[9px] sm:text-[10px] tracking-widest uppercase font-semibold transition-all duration-300 cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transform hover:scale-[1.03] active:scale-[0.98]"
+            >
+              Get Started
+            </button>
+          )}
+          {view === "result" && (
+            <button
+              onClick={() => setView("input")}
+              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-white/10 hover:border-white/20 hover:bg-white/5 text-[9px] sm:text-[10px] tracking-widest uppercase font-semibold text-white/80 hover:text-white transition-all cursor-pointer shadow-lg active:scale-[0.98]"
+            >
+              Inscribe New Dream
+            </button>
+          )}
+        </div>
+      </motion.nav>
 
       {/* View Controller Stack */}
       <AnimatePresence mode="wait">
-        {view === "preloader" && (
-          <Preloader key="preloader" onComplete={() => setView("intro")} />
-        )}
         
         {view === "intro" && (
           <motion.div
@@ -188,7 +182,7 @@ export default function Home() {
       <DreamAnalysisOverlay isVisible={view === "analyzing"} />
 
       {/* Global Footer (shown in normal screens only) */}
-      {view !== "preloader" && view !== "analyzing" && (
+      {view !== "analyzing" && (
         <Footer />
       )}
     </main>
